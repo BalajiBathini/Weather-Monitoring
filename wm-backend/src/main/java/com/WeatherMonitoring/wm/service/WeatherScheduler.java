@@ -30,7 +30,44 @@ public class WeatherScheduler {
      */
     @Scheduled(fixedRate = 300000)  // Every 5 minutes
     public void fetchWeatherData() {
-        String[] cities = {"Delhi", "Mumbai", "Chennai", "Bangalore", "Kolkata", "Hyderabad"};
+        String[] cities = {
+                "Delhi",
+                "Jaipur",
+                "Agra",
+                "Varanasi",
+                "Dehradun",
+                "Chandigarh",
+                "Mumbai",
+                "Pune",
+                "Ahmedabad",
+                "Surat",
+                "Nagpur",
+                "Bangalore",
+                "Chennai",
+                "Hyderabad",
+                "Coimbatore",
+                "Thiruvananthapuram",
+                "Kolkata",
+                "Bhubaneswar",
+                "Guwahati",
+                "Patna",
+                "Durgapur",
+                "Bhopal",
+                "Indore",
+                "Nagpur",
+                "Shillong",
+                "Imphal",
+                "Agartala",
+                "Aizawl",
+                "Srinagar",
+                "Leh",
+                "Puducherry",
+                "Mysuru",
+                "Vadodara",
+                "Jodhpur",
+                "Nashik"
+        };
+
 
         for (String city : cities) {
             WeatherResponse weatherResponse = weatherService.getWeather(city);
