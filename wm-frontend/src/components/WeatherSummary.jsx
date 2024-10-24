@@ -8,7 +8,7 @@ const WeatherSummary = ({ summary, unit }) => {
     
 
     return (
-        <div className="weather-summary">
+        <div className="weather-summary lg-4">
             <h3>{summary.city}</h3>
             <p>Date: {summary.date}</p>
             <p>Average Temperature: {convertTemp(summary.averageTemp, unit)} °{unit}</p>
