@@ -1,8 +1,6 @@
 package com.WeatherMonitoring.wm.service;
 
 import com.WeatherMonitoring.wm.model.WeatherResponse;
-import com.WeatherMonitoring.wm.model.WeatherSummary;
-import com.WeatherMonitoring.wm.repository.WeatherSummaryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;

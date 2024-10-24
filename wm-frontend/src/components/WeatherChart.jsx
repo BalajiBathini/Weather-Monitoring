@@ -1,21 +1,24 @@
 // src/components/WeatherChart.jsx
 
-
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, LineElement, PointElement, LinearScale, Title, Tooltip, Legend, CategoryScale } from 'chart.js';
 
 // Register necessary components
 ChartJS.register(LineElement, PointElement, LinearScale, Title, Tooltip, Legend, CategoryScale);
 
-const WeatherChart = ({ summaries }) => {
+const WeatherChart = ({ summaries, unit }) => {
+    const convertTemp = (temp, unit) => {
+        return unit === 'C' ? temp : (temp * 9) / 5 + 32; // Convert to Fahrenheit if necessary
+    };
+
     const labels = summaries.map(summary => summary.date);
-    const data = summaries.map(summary => summary.averageTemp);
+    const data = summaries.map(summary => convertTemp(summary.averageTemp, unit));
 
     const chartData = {
         labels,
         datasets: [
             {
-                label: 'Average Temperature (°C)',
+                label: `Average Temperature (°${unit})`,
                 data,
                 fill: false,
                 borderColor: 'rgba(75, 192, 192, 1)',
@@ -32,7 +35,7 @@ const WeatherChart = ({ summaries }) => {
             },
             title: {
                 display: true,
-                text: 'Average Temperature Over Time',
+                text: `Average Temperature Over Time (°${unit})`,
             },
         },
     };

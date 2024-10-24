@@ -9,6 +9,7 @@ const WeatherSummaryList = ({ city }) => {
     const [summaries, setSummaries] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [unit, setUnit] = useState('C');  // State to track temperature unit (Celsius or Fahrenheit)
 
     useEffect(() => {
         const getWeatherSummaries = async () => {
@@ -27,15 +28,24 @@ const WeatherSummaryList = ({ city }) => {
         getWeatherSummaries();
     }, [city]);
 
+    const toggleUnit = () => {
+        setUnit(unit === 'C' ? 'F' : 'C');
+    };
+
     if (loading) return <p>Loading...</p>;
     if (error) return <p>{error}</p>;
 
     return (
         <div className="weather-summary-list">
+            <div className="toggle-container text-end">
+                <button onClick={toggleUnit}>
+                    Switch to °{unit === 'C' ? 'F' : 'C'}
+                </button>
+            </div>
             {summaries.map((summary) => (
-                <WeatherSummary key={summary.date} summary={summary} />
+                <WeatherSummary key={summary.date} summary={summary} unit={unit} />
             ))}
-            <WeatherChart summaries={summaries} />  {/* Add the WeatherChart here */}
+            <WeatherChart summaries={summaries} unit={unit} />  {/* Pass the unit to WeatherChart */}
         </div>
     );
 };

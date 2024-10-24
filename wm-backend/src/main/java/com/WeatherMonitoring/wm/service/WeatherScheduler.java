@@ -1,6 +1,5 @@
 package com.WeatherMonitoring.wm.service;
 
-import com.WeatherMonitoring.wm.controller.WeatherController;
 import com.WeatherMonitoring.wm.model.WeatherResponse;
 import com.WeatherMonitoring.wm.model.WeatherSummary;
 import com.WeatherMonitoring.wm.repository.WeatherSummaryRepository;
@@ -19,6 +18,7 @@ import java.util.Optional;
 @Service
 public class WeatherScheduler {
     private static final Logger logger = LoggerFactory.getLogger(WeatherScheduler.class);
+
     @Autowired
     private WeatherService weatherService;
 
@@ -31,43 +31,14 @@ public class WeatherScheduler {
     @Scheduled(fixedRate = 300000)  // Every 5 minutes
     public void fetchWeatherData() {
         String[] cities = {
-                "Delhi",
-                "Jaipur",
-                "Agra",
-                "Varanasi",
-                "Dehradun",
-                "Chandigarh",
-                "Mumbai",
-                "Pune",
-                "Ahmedabad",
-                "Surat",
-                "Nagpur",
-                "Bangalore",
-                "Chennai",
-                "Hyderabad",
-                "Coimbatore",
-                "Thiruvananthapuram",
-                "Kolkata",
-                "Bhubaneswar",
-                "Guwahati",
-                "Patna",
-                "Durgapur",
-                "Bhopal",
-                "Indore",
-                "Nagpur",
-                "Shillong",
-                "Imphal",
-                "Agartala",
-                "Aizawl",
-                "Srinagar",
-                "Leh",
-                "Puducherry",
-                "Mysuru",
-                "Vadodara",
-                "Jodhpur",
-                "Nashik"
+                "Delhi", "Jaipur", "Agra", "Varanasi", "Dehradun", "Chandigarh",
+                "Mumbai", "Pune", "Ahmedabad", "Surat", "Nagpur", "Bangalore",
+                "Chennai", "Hyderabad", "Coimbatore", "Thiruvananthapuram",
+                "Kolkata", "Bhubaneswar", "Guwahati", "Patna", "Durgapur",
+                "Bhopal", "Indore", "Shillong", "Imphal", "Agartala",
+                "Aizawl", "Srinagar", "Leh", "Puducherry", "Mysuru",
+                "Vadodara", "Jodhpur", "Nashik"
         };
-
 
         for (String city : cities) {
             WeatherResponse weatherResponse = weatherService.getWeather(city);
@@ -88,18 +59,20 @@ public class WeatherScheduler {
                     summary.setMinTemp(tempCelsius);
                     summary.setDominantWeather(weatherResponse.getWeather().get(0).getMain());
                     summary.setDate(today);
+                    summary.setUpdateCount(1); // Initial count for today
                     weatherSummaryRepository.save(summary);
                 } else {
                     // Update existing summary
                     WeatherSummary summary = optionalSummary.get();
-                    summary.setAverageTemp((summary.getAverageTemp() + tempCelsius) / 2); // Rolling average
+                    // More accurate average temperature update
+                    summary.setAverageTemp(((summary.getAverageTemp() * summary.getUpdateCount()) + tempCelsius) / (summary.getUpdateCount() + 1));
                     summary.setMaxTemp(Math.max(summary.getMaxTemp(), tempCelsius));
                     summary.setMinTemp(Math.min(summary.getMinTemp(), tempCelsius));
+                    summary.setUpdateCount(summary.getUpdateCount() + 1); // Increment update count
                     weatherSummaryRepository.save(summary);
                 }
                 logger.info("Weather data for {} fetched successfully.", city);
-            }
-            else {
+            } else {
                 logger.warn("Failed to fetch weather data for {}", city);
             }
         }

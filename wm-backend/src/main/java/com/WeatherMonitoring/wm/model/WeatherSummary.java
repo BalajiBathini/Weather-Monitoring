@@ -42,4 +42,6 @@ public class WeatherSummary {
 
     @Column(name = "Date")
     private LocalDate date;
+
+    private int updateCount; // Track how many times the weather data has been updated
 }

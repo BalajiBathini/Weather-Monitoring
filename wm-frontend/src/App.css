@@ -5,33 +5,7 @@
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
 
 .card {
   padding: 2em;
@@ -39,4 +13,43 @@
 
 .read-the-docs {
   color: #888;
+}
+.weather-summary-list {
+  padding: 20px;
+}
+
+.toggle-container {
+  margin-bottom: 20px;
+}
+
+button {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+button:hover {
+  background-color: #0056b3;
+  transform: scale(1.1);
+}
+
+.weather-summary {
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin-bottom: 10px;
+  box-shadow: 0px 2px 4px rgb(39, 38, 38);
+  border-radius: 8px;
+}
+
+.weather-summary h3 {
+  margin-top: 0;
+}
+
+.form-select{
+  width:auto;
+  justify-self: center;
 }
